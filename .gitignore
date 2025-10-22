@@ -1,0 +1,14 @@
+# Ignorar a pasta de configurações do VSCode
+.vscode/
+
+# Ignorar arquivos executáveis do Windows
+*.exe
+
+# Ignorar arquivos objeto (saída da compilação)
+*.o
+*.obj
+*.out
+
+# Ignorar arquivos de depuração
+*.gdb
+*.gch
