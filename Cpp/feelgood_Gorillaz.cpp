@@ -7,7 +7,7 @@ using namespace std;
 
 void Letters(string text, int mseconds, int delay){
 
-    for(int i=0;i<text.length();i++){
+    for(size_t i=0;i<text.length();i++){
         cout<<text[i];
         this_thread::sleep_for(chrono::milliseconds(mseconds));
     }
