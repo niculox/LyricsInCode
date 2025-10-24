@@ -39,18 +39,3 @@ int main() {
     return 0;
 
 }
-
-
-/*
-    cout<<" o "<<endl;
-    cout<<"(|)"<<endl;
-    cout<<"/ |"<<endl<<endl;
-
-    cout<<"(o "<<endl;
-    cout<<" |)"<<endl;
-    cout<<"/ |"<<endl<<endl;
-
-    cout<<" o)"<<endl;
-    cout<<"(| "<<endl;
-    cout<<"/ |"<<endl<<endl;
-*/
