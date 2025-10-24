@@ -1,74 +1,67 @@
 package Java;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class CabelosarcoirisGatopreto {
 
-    // Códigos de Reset
+    // --- Constantes ANSI
     public static final String ANSI_RESET = "\u001B[0m";
-
-    // Códigos de Cores (Texto)
-    public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
     public static final String ANSI_GREEN = "\u001B[32m";
     public static final String ANSI_YELLOW = "\u001B[33m";
     public static final String ANSI_BLUE = "\u001B[34m";
     public static final String ANSI_PURPLE = "\u001B[35m";
     public static final String ANSI_CYAN = "\u001B[36m";
-    public static final String ANSI_WHITE = "\u001B[37m";
-
-    public static final String ANSI_BOLD = "\u001B[1m";
     public static final String ANSI_ITALIC = "\u001B[3m";
-    public static final String ANSI_INVERT = "\u001B[7m";
+    public static final String ANSI_BOLD = "\u001B[1m";
 
-    public void letters(String text, int time, int delay, Optional<String> style){
+    /**
+     * Imprime um texto letra por letra com um estilo opcional.
+     * Esta é a versão "completa" do método.
+     *
+     * @param text O texto a ser impresso.
+     * @param charDelayMs O delay em milissegundos entre cada caractere.
+     * @param postLineDelayMs O delay em milissegundos após a linha terminar.
+     * @param style O código de estilo ANSI (ex: ANSI_RED + ANSI_BOLD).
+     */
+    public void letters(String text, int charDelayMs, int postLineDelayMs, String style) {
 
-        String appliedStyle = style.orElse(ANSI_RESET);
-        for(int i=0; i<text.length();i++){
-            System.out.print(appliedStyle + text.charAt(i));
-            try {
-                Thread.sleep(time);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        System.out.print(style);
+
+        for (char c : text.toCharArray()) {
+            System.out.print(c);
+            sleepMs(charDelayMs); 
         }
+
+        System.out.print(ANSI_RESET);
         System.out.println();
-        try {
-            Thread.sleep(delay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        sleepMs(postLineDelayMs); 
     }
 
-    public void rainbow(String text, int time, int delay){
 
+    public void letters(String text, int charDelayMs, int postLineDelayMs) {
+        letters(text, charDelayMs, postLineDelayMs, ""); 
+    }
+
+
+    public void rainbow(String text, int charDelayMs, int postLineDelayMs) {
         String[] colors = {
                 ANSI_RED, ANSI_YELLOW, ANSI_GREEN,
                 ANSI_CYAN, ANSI_BLUE, ANSI_PURPLE
         };
 
-        for(int i=0; i<text.length();i++){
-            System.out.print(colors[i % colors.length] + text.charAt(i) + ANSI_RESET);
-            try {
-                Thread.sleep(time);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        int i = 0;
+        for (char c : text.toCharArray()) {
+            System.out.print(colors[i % colors.length] + c + ANSI_RESET);
+            sleepMs(charDelayMs);
+            i++;
         }
 
         System.out.println();
-
-        try {
-            Thread.sleep(delay);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
+        sleepMs(postLineDelayMs);
     }
 
-    public void clearScreen() {  
+    public static void clearScreen() {  
         try {
             String os = System.getProperty("os.name");
 
@@ -85,7 +78,17 @@ public class CabelosarcoirisGatopreto {
         }
     }
 
-    public static void main(String[] args) {
+    private void sleepMs(int milliseconds) {
+        if (milliseconds <= 0) return; 
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    public void executarRoteiro() {
         String line1 = "é o rei da batidinha";
         String line2 = "kamaitachi";
         String line3 = "cabelos arco-íris";
@@ -103,32 +106,34 @@ public class CabelosarcoirisGatopreto {
         String line15 = "E esquecer que segunda-feira, no caso";
         String line16 = "Amanhã, já tem aula";
 
-        CabelosarcoirisGatopreto obj = new CabelosarcoirisGatopreto();
+        letters(line1, 60, 800);
+        letters(line2, 50, 1000, ANSI_ITALIC + ANSI_CYAN);
+        rainbow(line3, 60, 100);
+        clearScreen();
+        letters(line4, 40, 0, ANSI_ITALIC);
+        clearScreen();
+        letters(line5, 70, 1500, ANSI_BOLD + ANSI_GREEN);
+        clearScreen();
+        letters(line6, 90, 1500, ANSI_ITALIC + ANSI_PURPLE);
+        rainbow(line7, 90, 1000);
+        letters(line8, 90, 700, ANSI_ITALIC + ANSI_YELLOW);
+        rainbow(line9, 80, 1500);
+        clearScreen();
+        letters(line10, 100, 1500);
+        clearScreen();
+        letters(line11, 50, 0);
+        rainbow(line12, 80, 1500);
+        clearScreen();
+        letters(line13, 40, 500);
+        rainbow(line14, 80, 1000);
+        clearScreen();
+        letters(line15, 80, 0, ANSI_ITALIC);
+        letters(line16, 50, 1000, ANSI_ITALIC + ANSI_RED);
+    }
 
-        obj.letters(line1, 60, 800, Optional.empty());
-        obj.letters(line2, 50, 1000, Optional.of(ANSI_ITALIC + ANSI_CYAN));
-        obj.rainbow(line3,60,100);
-        obj.clearScreen();
-        obj.letters(line4, 40, 0, Optional.of(ANSI_ITALIC));
-        obj.clearScreen();
-        obj.letters(line5, 70, 1500, Optional.of(ANSI_BOLD + ANSI_GREEN));
-        obj.clearScreen();
-        obj.letters(line6, 90, 1500, Optional.of(ANSI_ITALIC + ANSI_PURPLE));
-        obj.rainbow(line7, 90, 1000);
-        obj.letters(line8,90, 700, Optional.of(ANSI_ITALIC + ANSI_YELLOW));
-        obj.rainbow(line9, 80, 1500);
-        obj.clearScreen();
-        obj.letters(line10,100, 1500, Optional.empty());
-        obj.clearScreen();
-        obj.letters(line11,50, 0, Optional.empty());
-        obj.rainbow(line12, 80, 1500);
-        obj.clearScreen();
-        obj.letters(line13,40, 500, Optional.empty());
-        obj.rainbow(line14, 80, 1000);
-        obj.clearScreen();
-        obj.letters(line15,80, 0, Optional.of(ANSI_ITALIC));
-        obj.letters(line16,50, 1000, Optional.of(ANSI_ITALIC + ANSI_RED));
-
+    public static void main(String[] args) {
+        CabelosarcoirisGatopreto printer = new CabelosarcoirisGatopreto();
+        printer.executarRoteiro();
     }
 
 }
