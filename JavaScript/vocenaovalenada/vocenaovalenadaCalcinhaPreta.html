@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Você não vale nada - Calcinha Preta</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <style>
+        body{
+            font-family: Arial, sans-serif;
+            padding: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        button {
+            border: none;
+            background: none;
+        }
+
+        /* Em vez de JS mudar a cor, ele só vai trocar a classe do body. */
+        body.bg-light { background-color: #ffffff; }
+        body.bg-dark  { background-color: #000000; }
+        body.bg-red   { background-color: #ff0000; }
+
+        /* Define todos os estilos que se repetem. */
+        .lyric-line {
+            font-family: "Oswald", sans-serif;
+            font-size: 60px;
+            font-weight: 700;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        /* Classes pequenas que só mudam o que é diferente.*/
+        .style-dark-on-light { color: #000000; }
+        .style-light-on-dark { color: #ffffff; }
+        .style-black-on-red  { color: #000000; }
+        .style-red-emphasis  { 
+            color: red; 
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="bg-light"> 
+    <div id="lyrics">
+
+        <audio id="music" loop muted>
+            <source src="./calcinhapreta.mpeg" type="audio/mpeg">
+        </audio>
+        
+        <button id="som" class="meu-botao">
+             Você Não Vale Nada 
+        </button>
+        
+        <div id="gif1"></div>
+        
+        <div id="line" class="lyric-line"></div>
+        <div id="line_2" class="lyric-line"></div>
+        <div id="line_3" class="lyric-line"></div>
+
+    </div>
+
+    <script>
+const audio = document.getElementById('music');
+const botao = document.getElementById('som');
+const gif1 = document.getElementById('gif1');
+const body = document.body;
+const lineDiv = document.getElementById('line');
+const lineDiv2 = document.getElementById('line_2');
+const lineDiv3 = document.getElementById('line_3');
+
+const LYRICS = {
+    line1: "Você não vale nada",
+    line2: "Mas eu gosto de você",
+    line3: "Tudo que eu queria",
+    line4: "era saber",
+    line5: "por quê",
+    line6: "Você brincou comigo",
+    line7: "Bagunçou a minha vida",
+    line8: "E esse sofrimento",
+    line9: "Não tem explicação"
+};
+
+const GIFS = {
+    gif1: "https://i.pinimg.com/originals/39/22/34/39223461ca90c2997987699e3112ec6f.gif",
+    gif2: "https://i.pinimg.com/originals/0f/98/7a/0f987a07bcd46d1fef29148798f55e6a.gif"
+};
+
+/*Cria uma "pausa" que podemos esperar.*/
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+function typeLine(element, text, styleClass, speed = 30) {
+    return new Promise(resolve => {
+        element.className = `lyric-line ${styleClass}`;
+        element.textContent = '';
+        let i = 0;
+
+        function addChar() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(addChar, speed);
+            } else {
+                resolve(); // Resolve a promessa quando terminar
+            }
+        }
+        addChar();
+    });
+}
+
+/** Mostra uma linha de texto instantaneamente. */
+function showLine(element, text, styleClass) {
+    element.className = `lyric-line ${styleClass}`;
+    element.innerHTML = text;
+}
+
+/** Limpa o conteúdo de um ou mais elementos. */
+function clearElements(...elements) {
+    for (const el of elements) {
+        if (el) el.innerHTML = '';
+    }
+}
+
+/** Controla o fundo apenas trocando a classe do body. */
+function setBackground(bgClass) {
+    body.className = bgClass;
+}
+
+/** Mostra um GIF. */
+function showGif(element, gifUrl) {
+    element.innerHTML = `<img src="${gifUrl}" alt="Calcinha Preta">`;
+}
+
+async function runLyricSequence() {
+    try {
+
+        await sleep(1000); 
+        audio.play();
+        showGif(gif1, GIFS.gif1);
+
+        await sleep(4500); 
+        clearElements(gif1);
+        setBackground('bg-dark');
+
+        await sleep(600); 
+        setBackground('bg-light');
+        // 'await' faz o código ESPERAR a digitação terminar
+        typeLine(lineDiv, LYRICS.line1, 'style-dark-on-light');
+
+        await sleep(900); 
+        clearElements(lineDiv);
+        setBackground('bg-dark');
+        typeLine(lineDiv, LYRICS.line2, 'style-light-on-dark');
+
+        await sleep(1500); 
+        clearElements(lineDiv);
+        setBackground('bg-light');
+        typeLine(lineDiv, LYRICS.line1, 'style-dark-on-light');
+
+        await sleep(1000); 
+        typeLine(lineDiv2, LYRICS.line2, 'style-red-emphasis');
+        
+        await sleep(1500); 
+        clearElements(lineDiv, lineDiv2);
+        setBackground('bg-dark');
+        showLine(lineDiv, LYRICS.line3, 'style-light-on-dark');
+
+        await sleep(1000); 
+        showLine(lineDiv2, LYRICS.line4, 'style-light-on-dark');
+
+        await sleep(800); 
+        showLine(lineDiv3, LYRICS.line5, 'style-red-emphasis');
+
+        await sleep(1000); 
+        clearElements(lineDiv, lineDiv2, lineDiv3);
+        setBackground('bg-light');
+        showLine(lineDiv, LYRICS.line3, 'style-dark-on-light');
+
+        await sleep(1000); 
+        clearElements(lineDiv);
+        setBackground('bg-dark');
+        showLine(lineDiv, LYRICS.line4, 'style-light-on-dark');
+
+        await sleep(1000); 
+        clearElements(lineDiv);
+        setBackground('bg-red');
+        showLine(lineDiv, LYRICS.line5, 'style-black-on-red');
+        
+        await sleep(600); 
+        clearElements(lineDiv);
+        setBackground('bg-light');
+        typeLine(lineDiv, LYRICS.line1, 'style-dark-on-light');
+        
+        await sleep(900); 
+        clearElements(lineDiv);
+        setBackground('bg-dark');
+        typeLine(lineDiv, LYRICS.line2, 'style-light-on-dark');
+
+        await sleep(1700); 
+        clearElements(lineDiv);
+        setBackground('bg-light');
+        typeLine(lineDiv, LYRICS.line1, 'style-dark-on-light');
+        
+        await sleep(1000); 
+        typeLine(lineDiv2, LYRICS.line2, 'style-red-emphasis');
+        
+        await sleep(1500); 
+        clearElements(lineDiv, lineDiv2);
+        setBackground('bg-dark');
+        showLine(lineDiv, LYRICS.line3, 'style-light-on-dark');
+
+        await sleep(700); 
+        showLine(lineDiv2, LYRICS.line4, 'style-light-on-dark');
+
+        await sleep(1000); 
+        showLine(lineDiv3, LYRICS.line5, 'style-red-emphasis');
+
+        await sleep(1000); 
+        clearElements(lineDiv, lineDiv2, lineDiv3);
+        setBackground('bg-light');
+        showLine(lineDiv, LYRICS.line3, 'style-dark-on-light');
+
+        await sleep(800); 
+        clearElements(lineDiv);
+        setBackground('bg-dark');
+        showLine(lineDiv, LYRICS.line4, 'style-light-on-dark');
+
+        await sleep(800); 
+        clearElements(lineDiv);
+        setBackground('bg-red');
+        showLine(lineDiv, LYRICS.line5, 'style-black-on-red');
+        
+        await sleep(1000); 
+        clearElements(lineDiv);
+        setBackground('bg-dark');
+        // Promise.all executa ações em PARALELO
+        Promise.all([
+           showGif(gif1, GIFS.gif2),
+           showLine(lineDiv, LYRICS.line6, 'style-light-on-dark')
+        ]);
+
+        await sleep(1000); 
+        showLine(lineDiv, LYRICS.line7, 'style-light-on-dark');
+        
+        await sleep(1000); 
+        showLine(lineDiv, LYRICS.line8, 'style-light-on-dark');
+        
+        await sleep(1500); 
+        showLine(lineDiv, LYRICS.line9, 'style-light-on-dark');
+        
+    } catch (error) {
+        console.error("Erro na sequência de animação:", error);
+    }
+}
+
+botao.addEventListener('click', () => {
+    botao.style.display = 'none'; 
+    audio.muted = false; 
+
+    // Inicia a sequência de animação
+    runLyricSequence();
+    
+}, { once: true }); 
+
+    </script>
+</body>
+</html>
