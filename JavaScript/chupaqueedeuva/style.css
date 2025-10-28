@@ -1,0 +1,27 @@
+body{
+    font-family: "Oswald", sans-serif;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+img {
+    max-width: 100%;
+    height: auto;
+}
+.lyric-line {
+    font-family: "Oswald", sans-serif;
+    font-size: 60px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1.1;
+}
+.style-dark-on-light { color: #000000; }
+.style-light-on-dark { color: #ffffff; }
+.style-black-on-red  { color: #000000; }
+.style-red-emphasis  { 
+    color: red; 
+    font-style: italic;
+}
