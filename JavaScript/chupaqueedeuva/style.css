@@ -8,9 +8,16 @@ body{
     margin: 0;
 }
 img {
-    max-width: 100%;
+    max-width: 80%;
     height: auto;
 }
+
+#img{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .lyric-line {
     font-family: "Oswald", sans-serif;
     font-size: 60px;
@@ -18,10 +25,22 @@ img {
     text-transform: uppercase;
     line-height: 1.1;
 }
+
+body.bg-light { background-color: #ffffff; }
+body.bg-dark  { background-color: #000000; }
+body.bg-red   { background-color: #ff0000; }
+body.bg-orange   { background-color: #ff5500; }
+body.bg-pink   { background-color: hsl(310, 100%, 67%); }
+body.bg-purple   { background-color: hsl(310, 98%, 21%); }
+
 .style-dark-on-light { color: #000000; }
 .style-light-on-dark { color: #ffffff; }
 .style-black-on-red  { color: #000000; }
 .style-red-emphasis  { 
     color: red; 
     font-style: italic;
+}
+.style-basic-size {
+    color: #000000;
+    font-size: 80px;
 }
