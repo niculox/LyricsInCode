@@ -18,7 +18,7 @@ const LYRICS = {
 
 const GIF = "https://i.pinimg.com/originals/24/da/59/24da59d9d50de9772aea99a7d65ea86f.gif";
 
-const AUDIO_SRC = ""; 
+const AUDIO_SRC = "./chupaqueedeuva.mpeg"; 
 
 const IMAGES = {
     cajuzinho: "https://i.pinimg.com/736x/e7/0c/31/e70c312bc4cb2210c4e1696bfe9e6638.jpg",
@@ -29,4 +29,74 @@ const IMAGES = {
     uva3: "https://i.pinimg.com/736x/e2/af/59/e2af591b70a89df1529a993b6c966223.jpg",
     maluca1: "https://i.pinimg.com/736x/65/13/bc/6513bcce3f1ecde8ee78f5a9e0dc8f93.jpg",
     maluca2: "https://i.pinimg.com/736x/de/5e/01/de5e01a00428bd0513ae1f8d2b9b7f41.jpg"
+}
+
+const body = document.body;
+const botao = document.getElementById('som');
+const line1 = document.getElementById('line1');
+const line2 = document.getElementById('line2');
+const gif = document.getElementById('gif');
+const audio = new Audio(AUDIO_SRC);
+audio.muted = true;
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+function typeLine(element, text, styleClass, speed = 30) {
+    return new Promise(resolve => {
+        element.className = `lyric-line ${styleClass}`;
+        element.textContent = '';
+        let i = 0;
+
+        function addChar() {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+                setTimeout(addChar, speed);
+            } else {
+                resolve(); 
+            }
+        }
+        addChar();
+    });
+}
+
+function showLine(element, text, styleClass) {
+    element.className = `lyric-line ${styleClass}`;
+    element.innerHTML = text;
+}
+
+function clearElements(...elements) {
+    for (const el of elements) {
+        if (el) el.innerHTML = '';
+    }
+}
+
+function setBackground(bgClass) {
+    body.className = bgClass;
+}
+
+function showGif(element, gifUrl) {
+    element.innerHTML = `<img src="${gifUrl}" alt="Calcinha Preta">`;
+}
+
+botao.addEventListener('click', () => {
+    botao.style.display = 'none'; 
+    audio.muted = false; 
+
+    runLyricSequence();
+    
+}, { once: true }); 
+
+async function runLyricSequence() {
+    try {
+
+        await sleep(1000);
+        showGif(gif, GIF);
+        audio.play();
+
+        
+        
+    } catch (error) {
+        console.error("Erro na sequência de animação:", error);
+    }
 }

@@ -4,11 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chupa que é de uva - Aviões do Forró</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-light">
 
+    <div id="lyrics">
+        <audio id="music" loop muted>
+            <source src="./chupaqueedeuva.mpeg" type="audio/mpeg">
+        </audio>
+
+        <div id="gif"></div>
+        
+        <button id="som" class="meu-botao">Chupa que é de uva</button>
+
+        <div id="line1" class="lyric-line"></div>
+        <div id="line2" class="lyric-line"></div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
+</html>
