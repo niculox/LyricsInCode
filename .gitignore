@@ -12,3 +12,15 @@
 # Ignorar arquivos de depuração
 *.gdb
 *.gch
+
+# Ambientes Virtuais (evita o commit das centenas de pacotes)
+.venv/
+venv/
+env/
+ENV/
+
+# Arquivos temporários e de cache do Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
